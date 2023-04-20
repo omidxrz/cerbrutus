@@ -67,11 +67,13 @@ class BruteUtil:
         self.test_connection()
 
         for user in self.users:
+            user = Cerbrutus.Wordlist.clean_word(user)
             print(f"[*] - Starting attack against {user}@{self.ip}:{self.port}")
             for pwd in self.passwords: 
                 if self.creds_found:
                     self._exit()
                 self.passwords[self.passwords.index(pwd)] = pwd = Cerbrutus.Wordlist.clean_word(pwd)
+                # print(f"\n\n\n{pwd}\n\n")
                 thread = threading.Thread(target=self._auth, args=(user, pwd))
                 self.threads.append(thread)
                 while threading.active_count() > self.threads_num + 1:
@@ -90,7 +92,7 @@ class BruteUtil:
             time.sleep(2)
             print()
             print(f"{Fore.GREEN}\033[1m[+] - VALID CREDENTIALS FOUND:\n\t{user}:{pwd}{Style.RESET_ALL}")
-            print(f"[*] - Took {(self.passwords.index(pwd)+1)*(self.users.index(user)+1)} tries")
+            # print(f"[*] - Took {(self.passwords.index(pwd)+1)*(self.users.index(user)+1)} tries")
             self.end = time.time()
             print(f"[*] Total time - {self.end - self.start} seconds.")
 

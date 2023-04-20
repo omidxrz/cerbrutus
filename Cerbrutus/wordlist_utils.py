@@ -48,16 +48,19 @@ class Wordlist:
     def clean_word(word):
         if not word:
             return
+        # print(type(word))
+        
         try:
             word = word.decode('UTF-8').strip()
-        except UnicodeDecodeError:
-            # print("Skipping... ", end="")
-            # print(line)
-            try:
-                word = word.decode('Latin-1').strip()
-                # print(f"Read successfully {line.decode('Latin-1')}")
-            except UnicodeDecodeError:
-                return
+        except Exception as err:
+            return word
+        #     # print("Skipping... ", end="")
+        #     # print(line)
+        #     try:
+        #         word = word.decode('Latin-1').strip()
+        #         # print(f"Read successfully {line.decode('Latin-1')}")
+        #     except UnicodeDecodeError:
+        #         return
         return word
     '''
     def extend(self):
